@@ -676,13 +676,20 @@ function finishQuiz(){
     +'<p class="res-m">'+(passed?'Vous pouvez avancer dans la formation.':'Score insuffisant. Pas de panique — relisez le chapitre et réessayez.')+'</p>'
     +'<div class="res-thr">Score minimum requis : '+pg.min+' / '+pg.max+'</div>'
     +'<div style="display:flex;gap:11px;justify-content:center;flex-wrap:wrap">'
-    +(!passed?'<button class="btn btn-s" onclick="retryQz()">↺ Réessayer</button>':'')
+    +(!passed?'<button class="btn btn-s" onclick="goRevise()">← Réviser le contenu</button>':'')
     +'<button class="btn btn-p" onclick="'+(passed?'afterPass()':'retryQz()')+'">'+
-      (passed?'Continuer →':'↺ Réessayer')+'</button></div>';
+      (passed?'Continuer →':'↺ Réessayer le quiz')+'</button></div>';
   updateProgress();
 }
 
 function retryQz(){ startQuiz(S.qz.def); }
+
+function goRevise(){
+  // Retourne à la page de contenu qui précède le quiz dans ce chapitre
+  var prev = S.pgIdx - 1;
+  if(prev >= 0){ S.pgIdx = prev; renderPage(); }
+  else { showSc('sc-ch'); }
+}
 
 function afterPass(){
   var ch=CHAPTERS[S.chIdx];
