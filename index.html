@@ -182,6 +182,16 @@ details[open] summary::before{transform:rotate(90deg)}
 .badge-sc{text-align:center;padding:50px 20px}
 .badge-img{width:150px;margin:0 auto 24px;display:block;animation:badgePop .8s cubic-bezier(.34,1.56,.64,1) forwards}
 @keyframes badgePop{0%{transform:scale(0) rotate(-20deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes kw0{0%,100%{transform:translateY(0px) rotate(-4deg)}50%{transform:translateY(-9px) rotate(-2deg)}}
+@keyframes kw1{0%,100%{transform:translateY(0px) rotate(3deg)}50%{transform:translateY(-7px) rotate(5deg)}}
+@keyframes kw2{0%,100%{transform:translateY(0px) rotate(-2deg)}50%{transform:translateY(-11px) rotate(0deg)}}
+@keyframes kw3{0%,100%{transform:translateY(0px) rotate(5deg)}50%{transform:translateY(-6px) rotate(3deg)}}
+@keyframes kw4{0%,100%{transform:translateY(0px) rotate(-3deg)}50%{transform:translateY(-10px) rotate(-1deg)}}
+@keyframes kw5{0%,100%{transform:translateY(0px) rotate(1deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+@keyframes kw6{0%,100%{transform:translateY(0px) rotate(-5deg)}50%{transform:translateY(-7px) rotate(-3deg)}}
+@keyframes kw7{0%,100%{transform:translateY(0px) rotate(4deg)}50%{transform:translateY(-9px) rotate(2deg)}}
+@keyframes kw8{0%,100%{transform:translateY(0px) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+@keyframes kw9{0%,100%{transform:translateY(0px) rotate(2deg)}50%{transform:translateY(-8px) rotate(4deg)}}
 
 /* TOAST */
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(18px);background:var(--navy);color:#fff;padding:11px 22px;border-radius:50px;font-size:14px;z-index:200;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
@@ -513,7 +523,52 @@ function pCharte(){
     ['Empowerment','Chaque session augmente l\'autonomie et le pouvoir d\'agir.'],
   ];
   var colors=['--navy','--red','--gold'];
-  return '<img src="'+IMGS.img4+'" style="width:100%;max-height:280px;object-fit:contain;border-radius:var(--r);margin-bottom:22px;background:var(--sand)" alt="Charte"/>'
+
+  // Nuage de mots — positions (top%, left%), taille, couleur, animation
+  var kw=[
+    {t:'Dignité',         top:8,  left:4,  fs:26, c:'#c8913a', ani:'kw0', dur:4.1},
+    {t:'Utilité',         top:6,  left:52, fs:20, c:'#7fb9d8', ani:'kw1', dur:3.6},
+    {t:'Apprentissage\nactif', top:16, left:72, fs:15, c:'#a8d8a8', ani:'kw2', dur:5.0},
+    {t:'Accessibilité',   top:40, left:3,  fs:19, c:'#f0a0a0', ani:'kw3', dur:4.4},
+    {t:'Sécurité\npsychologique', top:60, left:14, fs:13, c:'#c8c8f0', ani:'kw4', dur:3.9},
+    {t:'Confiance',       top:44, left:52, fs:27, c:'#ffffff', ani:'kw5', dur:4.7},
+    {t:'Zéro honte',      top:72, left:58, fs:16, c:'#c8913a', ani:'kw6', dur:3.4},
+    {t:'Reconnaissance',  top:78, left:2,  fs:14, c:'#7fb9d8', ani:'kw7', dur:4.9},
+    {t:'Progressivité',   top:28, left:34, fs:22, c:'#a8d8a8', ani:'kw8', dur:4.2},
+    {t:'Empowerment',     top:56, left:76, fs:18, c:'#f0a0a0', ani:'kw9', dur:3.7},
+  ];
+
+  var cloud='<div style="position:relative;height:230px;background:linear-gradient(135deg,#1a2847 0%,#243359 60%,#1a3a5c 100%);border-radius:var(--r);margin-bottom:24px;overflow:hidden;box-shadow:0 4px 20px rgba(26,40,71,.3)">'
+    +'<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(200,145,58,.08) 0%,transparent 70%)"></div>';
+
+  kw.forEach(function(w,i){
+    var lines=w.t.split('\n');
+    var label=lines.length>1
+      ? lines.map(function(l){ return '<tspan x="0" dy="'+(lines.indexOf(l)===0?'0':'1.1em')+'">'+l+'</tspan>'; }).join('')
+      : w.t;
+    cloud+='<span style="'
+      +'position:absolute;'
+      +'top:'+w.top+'%;'
+      +'left:'+w.left+'%;'
+      +'font-size:'+w.fs+'px;'
+      +'color:'+w.c+';'
+      +'font-family:Playfair Display,serif;'
+      +'font-weight:'+(w.fs>=22?'700':'600')+';'
+      +'white-space:nowrap;'
+      +'opacity:'+(w.fs>=22?'1':w.fs>=17?'.9':'.75')+';'
+      +'text-shadow:0 2px 8px rgba(0,0,0,.4);'
+      +'animation:'+w.ani+' '+w.dur+'s ease-in-out infinite;'
+      +'animation-delay:'+(i*0.37)+'s;'
+      +'cursor:default;'
+      +'user-select:none;'
+      +'line-height:1.2;'
+      +'letter-spacing:'+(w.fs>=22?'-0.5px':'0px')+'">'
+      +w.t.replace('\n','<br>')
+      +'</span>';
+  });
+  cloud+='</div>';
+
+  return cloud
    +'<p style="margin-bottom:18px;font-style:italic;color:var(--muted)">Dix principes fondateurs qui orientent chaque posture, chaque activité, chaque interaction.</p>'
    +'<div style="display:flex;flex-direction:column;gap:7px">'
    +pp.map(function(p,i){ return '<div style="display:flex;gap:13px;background:#fff;border-radius:var(--rs);padding:13px 16px;box-shadow:0 1px 4px rgba(0,0,0,.05);border-left:3px solid var('+colors[i%3]+')"><div style="font-size:19px;font-family:Playfair Display,serif;color:var(--navy);opacity:.25;flex-shrink:0;line-height:1.2">'
