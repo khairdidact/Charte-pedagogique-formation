@@ -544,7 +544,47 @@ function pValeurs(){
     ['La participation','Vous rendez l\'apprenant acteur de sa formation.'],
     ['L\'espérance','Vous croyez au nouveau départ pour chaque personne.'],
   ];
-  return '<img src="'+IMGS.valeurs+'" style="width:100%;max-height:180px;object-fit:contain;border-radius:var(--r);margin-bottom:20px;background:#eee" alt="5 valeurs"/>'
+
+  // Nuage de mots pour les 5 valeurs — répétitions pour remplir l'espace
+  // Chaque valeur apparaît plusieurs fois à différentes tailles
+  var kw=[
+    // Inconditionnalité — ton chaud/or
+    {t:'Inconditionnalité', top:6,  left:2,  fs:28, c:'#c8913a', ani:'kw0', dur:4.2, w:700},
+    {t:'inconditionnelle', top:72, left:48, fs:14, c:'rgba(200,145,58,.5)', ani:'kw5', dur:5.1, w:400},
+    // Exigence — ton blanc/clair
+    {t:'Exigence',          top:8,  left:60, fs:22, c:'#ffffff',  ani:'kw1', dur:3.8, w:600},
+    {t:'exigence',          top:55, left:2,  fs:13, c:'rgba(255,255,255,.4)', ani:'kw6', dur:4.7, w:400},
+    // Fraternité — ton bleu clair
+    {t:'Fraternité',        top:38, left:28, fs:32, c:'#7fb9d8',  ani:'kw2', dur:4.5, w:700},
+    {t:'fraternelle',       top:78, left:74, fs:13, c:'rgba(127,185,216,.5)', ani:'kw7', dur:3.6, w:400},
+    // Participation — ton vert
+    {t:'Participation',     top:60, left:22, fs:20, c:'#a8d8a8',  ani:'kw3', dur:5.0, w:600},
+    {t:'participatif',      top:20, left:44, fs:12, c:'rgba(168,216,168,.5)', ani:'kw8', dur:4.3, w:400},
+    // Espérance — ton rose/corail
+    {t:'Espérance',         top:22, left:72, fs:25, c:'#f0a0a0',  ani:'kw4', dur:3.9, w:700},
+    {t:'espoir',            top:82, left:8,  fs:14, c:'rgba(240,160,160,.5)', ani:'kw9', dur:4.6, w:400},
+  ];
+
+  var cloud='<div style="position:relative;height:220px;background:linear-gradient(135deg,#1a2847 0%,#2a1a47 50%,#1a2847 100%);border-radius:var(--r);margin-bottom:24px;overflow:hidden;box-shadow:0 4px 20px rgba(26,40,71,.3)">'
+    // Halos décoratifs
+    +'<div style="position:absolute;left:15%;top:50%;transform:translate(-50%,-50%);width:120px;height:120px;background:radial-gradient(circle,rgba(200,145,58,.12) 0%,transparent 70%);border-radius:50%"></div>'
+    +'<div style="position:absolute;left:60%;top:45%;transform:translate(-50%,-50%);width:160px;height:160px;background:radial-gradient(circle,rgba(127,185,216,.1) 0%,transparent 70%);border-radius:50%"></div>'
+    +'<div style="position:absolute;left:80%;top:70%;transform:translate(-50%,-50%);width:100px;height:100px;background:radial-gradient(circle,rgba(240,160,160,.1) 0%,transparent 70%);border-radius:50%"></div>';
+
+  kw.forEach(function(w,i){
+    cloud+='<span style="'
+      +'position:absolute;top:'+w.top+'%;left:'+w.left+'%;'
+      +'font-size:'+w.fs+'px;color:'+w.c+';'
+      +'font-family:Playfair Display,serif;font-weight:'+w.w+';'
+      +'white-space:nowrap;'
+      +'text-shadow:0 2px 10px rgba(0,0,0,.5);'
+      +'animation:'+w.ani+' '+w.dur+'s ease-in-out infinite;'
+      +'animation-delay:'+(i*0.28)+'s;'
+      +'cursor:default;user-select:none;letter-spacing:'+(w.fs>=24?'-0.5px':'0px')+'">'+w.t+'</span>';
+  });
+  cloud+='</div>';
+
+  return cloud
    +'<p style="margin-bottom:18px">Votre action s\'appuie sur les <strong>5 valeurs de l\'Armée du Salut</strong> :</p>'
    +'<div class="vals-grid">'
    +vals.map(function(v){ return '<div class="val-card"><div class="val-name">'+v[0]+'</div><div class="val-desc">'+v[1]+'</div></div>'; }).join('')
