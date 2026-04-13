@@ -744,10 +744,34 @@ function finishQuiz(){
 function retryQz(){ startQuiz(S.qz.def); }
 
 function goRevise(){
-  // Retourne à la page de contenu qui précède le quiz dans ce chapitre
-  var prev = S.pgIdx - 1;
-  if(prev >= 0){ S.pgIdx = prev; renderPage(); }
-  else { showSc('sc-ch'); }
+  // Cherche la page html la plus éloignée avant le quiz (pas juste la page -1)
+  // Algorithme : remonte jusqu'à trouver une page html qui n'est pas directement
+  // collée au quiz (i.e. au moins 2 pas avant), sinon prend la 1ère page html trouvée.
+  var ch = CHAPTERS[S.chIdx];
+  var target = -1;
+  for(var i = S.pgIdx - 1; i >= 0; i--){
+    if(ch.pages[i].type === 'html'){
+      target = i;
+      // Si cette page est séparée du quiz par au moins un autre écran, on s'arrête
+      if(i < S.pgIdx - 1) break;
+    }
+  }
+  if(target >= 0){
+    S.pgIdx = target;
+    renderPage();
+  } else {
+    // Pas de html dans ce chapitre (ex: ch5 = uniquement eval5)
+    // → aller au chapitre précédent, première page html
+    if(S.chIdx > 0){
+      S.chIdx--;
+      var prevCh = CHAPTERS[S.chIdx];
+      S.pgIdx = 0;
+      while(S.pgIdx < prevCh.pages.length - 1 && prevCh.pages[S.pgIdx].type !== 'html') S.pgIdx++;
+      renderPage();
+    } else {
+      showSc('sc-ch');
+    }
+  }
 }
 
 function afterPass(){
