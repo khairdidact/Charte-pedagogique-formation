@@ -509,7 +509,7 @@ function pReperes(){
     ['La sécurité psychologique','#cc2929','L\'apprentissage se fait dans un cadre sécurisant où l\'erreur est permise.'],
   ];
   return '<img src="'+IMGS.classe+'" style="width:100%;max-height:220px;object-fit:cover;border-radius:var(--r);margin-bottom:22px" alt="Classe"/>'
-   +'<p style="margin-bottom:14px;font-style:italic;color:var(--muted)">S\'engager dans l\'alphabétisation auprès de personnes migrantes n\'est pas un acte anodin.</p>'
+   +'<p style="margin-bottom:14px;font-style:italic;color:var(--muted)">S\'engager auprès d\'adultes que l\'écrit a tenus à distance — qu\'ils découvrent le français comme langue étrangère, qu\'ils entrent pour la première fois dans l\'écrit, ou qu\'ils reconstruisent une maîtrise perdue — n\'est pas un acte anodin.</p>'
    +'<p style="margin-bottom:18px">Les personnes que vous accompagnerez ne sont pas des « débutants ». Ce sont des <strong>adultes porteurs d\'histoires</strong> et de compétences invisibles.</p>'
    +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px;margin:20px 0">'
    +blocks.map(function(b){ return '<div style="background:#fff;border-top:4px solid '+b[1]+';border-radius:var(--rs);padding:15px;box-shadow:0 2px 8px rgba(0,0,0,.05)">'
@@ -598,7 +598,7 @@ function pPublics(){
     {t:'Enfants et jeunes en difficulté', w:'Mineurs en décrochage, jeunes sans qualification.', e:'Éducation & prévention', d:'Prévenir les ruptures et soutenir la réussite éducative.', c:'#c8913a'},
     {t:'Personnes âgées / en situation de handicap', w:'Personnes isolées ou en perte d\'autonomie.', e:'Maintien de l\'autonomie', d:'Maintenir les capacités et favoriser le lien social.', c:'#2d7a4f'},
   ];
-  return '<p style="margin-bottom:18px">Vous allez rencontrer des publics très variés. À chaque public, son enjeu !</p>'
+  return '<p style="margin-bottom:18px">Les quatre publics ci-dessous décrivent la <strong>situation sociale</strong> des personnes que vous accompagnerez. Elle se croise avec leur <strong>rapport à l\'écrit</strong> — alphabétisation, FLE ou illettrisme — précisé dans les fondamentaux pédagogiques du site. Un même apprenant appartient souvent aux deux grilles à la fois.</p>'
    +'<div class="pub-grid">'
    +pubs.map(function(p){ return '<div class="pub-card" style="border-top-color:'+p.c+'">'
      +'<div class="pub-t">'+p.t+'</div><div class="pub-w">'+p.w+'</div>'
